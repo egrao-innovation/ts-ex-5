@@ -9,12 +9,8 @@ export class Clock {
     var finalHours: number = Math.floor(hours);
     var finalMinutes: number = Math.round((hours - finalHours) * 60);
 
-    if (finalHours < 0) {
-      finalHours = 24-(finalHours*-1)%24
-    }
-    if (finalHours > 23) {
-      finalHours = 0+(finalHours%24)
-    }
+    finalHours = (finalHours < 0) ? (24-(finalHours*-1)%24) : finalHours;
+    finalHours = (finalHours > 23) ? (0+(finalHours%24)) : finalHours;
     if (finalHours < 10 && finalMinutes < 10) {
       var hourString: string ="0"+finalHours.toString();
       var minuteString: string = "0"+finalMinutes.toString();
@@ -30,21 +26,15 @@ export class Clock {
     }
     return finalHours.toString()+':'+finalMinutes.toString();
   }
-
   public plus(plusMinutes: number): Clock {
     this.minutes+=plusMinutes;
     return this;
   }
-
   public minus(minusMinutes: number): Clock {
     this.minutes-=minusMinutes;
     return this;
   }
-
   public equals(other: Clock): unknown {
-    if (this.toString()===other.toString()) {
-      return true;
-    }
-    return false;
+    return (this.toString()===other.toString()) ? true : false;
   }
 }
