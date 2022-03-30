@@ -1,21 +1,50 @@
 export class Clock {
-  constructor(hour: unknown, minute?: unknown) {
-    throw new Error('Remove this statement and implement this function')
+  minutes: number;
+  constructor(hour: number, minute: number = 0) {
+    this.minutes= (hour*60) + minute;
   }
 
   public toString(): unknown {
-    throw new Error('Remove this statement and implement this function')
+    var hours: number = (this.minutes / 60);
+    var finalHours: number = Math.floor(hours);
+    var finalMinutes: number = Math.round((hours - finalHours) * 60);
+
+    if (finalHours < 0) {
+      finalHours = 24-(finalHours*-1)%24
+    }
+    if (finalHours > 23) {
+      finalHours = 0+(finalHours%24)
+    }
+    if (finalHours < 10 && finalMinutes < 10) {
+      var hourString: string ="0"+finalHours.toString();
+      var minuteString: string = "0"+finalMinutes.toString();
+      return hourString+':'+minuteString;
+    }
+    else if (finalHours < 10) {
+      var hourString: string ="0"+finalHours.toString();
+      return hourString+':'+finalMinutes.toString();
+    }
+    else if (finalMinutes < 10) {
+      var minuteString: string = "0"+finalMinutes.toString();
+      return finalHours.toString()+':'+minuteString;
+    }
+    return finalHours.toString()+':'+finalMinutes.toString();
   }
 
-  public plus(minutes: unknown): Clock {
-    throw new Error('Remove this statement and implement this function')
+  public plus(plusMinutes: number): Clock {
+    this.minutes+=plusMinutes;
+    return this;
   }
 
-  public minus(minutes: unknown): Clock {
-    throw new Error('Remove this statement and implement this function')
+  public minus(minusMinutes: number): Clock {
+    this.minutes-=minusMinutes;
+    return this;
   }
 
-  public equals(other: unknown): unknown {
-    throw new Error('Remove this statement and implement this function')
+  public equals(other: Clock): unknown {
+    if (this.toString()===other.toString()) {
+      return true;
+    }
+    return false;
   }
 }
